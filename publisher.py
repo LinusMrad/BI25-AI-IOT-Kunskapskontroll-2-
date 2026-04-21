@@ -22,8 +22,22 @@ client.loop_start()
 print("MQTT connected")
 
 # Publish data
+# Funktion för att skapa mer realistisk temperaturdata
+def generate_sensor_data():
+    chance = random.random()
+
+    if chance < 0.75:
+        sensor_data = round(random.uniform(18, 24), 1)
+    elif chance < 0.95:
+        sensor_data = round(random.uniform(25, 28), 1)
+    else:
+        sensor_data = round(random.uniform(29, 35), 1)
+
+    return sensor_data
+
+# Publish data
 for i in range(20):
-    sensor_data = round(random.uniform(0, 40), 2)
+    sensor_data = generate_sensor_data()
 
     data = {
         "device_id": "sensor_1",
@@ -39,3 +53,8 @@ for i in range(20):
 client.loop_stop()
 client.disconnect()
 print("Publisher finished")
+
+client.loop_stop()
+client.disconnect()
+print("Publisher finished")
+
